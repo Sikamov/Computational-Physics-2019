@@ -1,0 +1,33 @@
+#Интерполяция по заданным точкам
+def lagrange(a, x, y):
+    b = 0
+    l = []
+    for i in range(len(x)):
+        l.append(1)
+        for k in range(len(x)):
+            if i != k:
+                l[i] = l[i] * (a - x[k]) / (x[i] - x[k])
+        b = b + y[i] * l[i]
+    return b
+from scipy import interpolate 
+import numpy as np
+#Переданные мне данные 
+x=[ 0.98768834,  0.89100652,  0.70710678,  0.4539905,   0.15643447, -0.15643447,
+ -0.4539905,  -0.70710678, -0.89100652]
+y=[2.6209003,  2.02863572, 1.42411902, 1.09808833, 1.00383556, 0.99617909,
+ 0.91067355, 0.7021885,  0.49294212]
+#Лагранж
+xr=np.linspace(min(x), max(x))
+yr=lagrange(xr,x,y)
+#Skipy
+f = interpolate.interp1d(x, y, kind='quadratic')
+xn = np.linspace(min(x), max(x))
+yn = f(xn)
+
+import matplotlib.pyplot as plt
+plt.plot(x,y,'o') 
+plt.plot(xr,yr,'-') 
+plt.plot(xn,yn,'-')
+plt.legend(("Узлы интерполяции", "Интерполяция Лагранж", "Интерполяция Skipy"))
+plt.show()        
+#Я думаю что это функция: e**(x**3) 
