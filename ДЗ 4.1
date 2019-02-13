@@ -1,0 +1,42 @@
+# Интерполяция методом Лагранжа
+# 0.Полином Лагранжа
+def lagrange(a, x, y):
+    b = 0
+    l = []
+    for i in range(len(x)):
+        l.append(1)
+        for k in range(len(x)):
+            if i != k:
+                l[i] = l[i] * (a - x[k]) / (x[i] - x[k])
+        b = b + y[i] * l[i]
+    return b
+
+#2.Истинный график
+z=np.arange(a,b,0.0001)
+p=1/(25*z**2+1)
+
+#2.Равномерная сетка
+import numpy as np
+a=-1   #левая граница интервала
+b=1    #правая граница интервала
+c=b-a   #ширина интервала
+n=15
+w=c/n #шаг между точками
+x=np.arange(a,b,w)
+y=1/(25*x**2+1)
+yr=lagrange(z,x,y)
+
+# 3.Узлы Чебышева
+m=15
+k=np.arange(1,m)
+xn=np.cos((2*k-1)/2/m*np.pi)
+yn=1/(25*xn**2+1)
+yk=lagrange(z,xn,yn)
+
+# 4.Строим графики 
+import matplotlib.pyplot as plt
+plt.plot(z,p,'-') 
+plt.plot(z,yk,'-') 
+plt.plot(z,yr,'-') 
+plt.legend(("Истинный", "Интерполяция Чебышев","Интерполяция Равномерная сетка"))
+plt.show()        
