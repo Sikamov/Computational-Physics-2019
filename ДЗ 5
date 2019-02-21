@@ -7,27 +7,32 @@ import numpy.random
 def matrix(n):
     a = np.zeros((n, n))
     for i in range(n-1):
-        a[i][i]=rnd.randint(10,20)
+        a[i][i]=rnd.randint(1,10)
         a[i+1][i]=rnd.randint(1,10)
         a[i][i+1]=rnd.randint(1,10)
-    a[n-1][n-1]=rnd.randint(10,20)  
+    a[n-1][n-1]=rnd.randint(1,10)  
     return a
+
 #Входные условия
-n=10
+n=3
 a=matrix(n)
-b= np.random.randint(1, 20, n)
+b=np.zeros(n)
+for i in range(n):
+    b[i]=rnd.randint(1,10)
 x=np.zeros(n)
 print(b)
 print(a)
+
 #Туда
 for i in range(n-1):
-    a[i][i+1]=a[i+1][i]/a[i][i]*a[i+1][i]
+    b[i+1]=b[i+1]-b[i]*a[i+1][i]/a[i][i]
+    a[i+1][i+1]=a[i+1][i+1]-a[i][i+1]*a[i+1][i]/a[i][i]
     a[i+1][i]=0
-        
+
 #Обратно
 x[n-1]=b[n-1]/a[n-1][n-1]
 for k in range (2,n+1):
-    x[n-k]=(b[n-k]-x[n-k+1]*a[n-k][n-k+1])/a[n-k-1][n-k-1]    
+    x[n-k]=(b[n-k]-x[n-k+1]*a[n-k][n-k+1])/a[n-k][n-k]    
 print(x)                    
                     
                 
