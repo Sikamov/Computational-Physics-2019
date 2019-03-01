@@ -1,10 +1,10 @@
-#Рисование спирали (четное кол-во букв в имени) в декартовой системы для различных значений a (шаг)
+#Рисование r=a+cos(fi)(четное кол-во букв в имени) в декартовой системы для различных значений a (шаг)
 import numpy as np
 import matplotlib.pyplot as plt 
 t=np.linspace(0,50,1000)
 for a in (5,15): #a-шаг спирали
-    x=a*t*np.sin(t)/np.pi/2 #параметрическое уравнение спирали
-    y=a*t*np.cos(t)/np.pi/2
+    x=(a+np.cos(t))*np.sin(t) #параметрическое уравнение спирали
+    y=(a+np.cos(t))*np.cos(t)/np.pi/2
     plt.plot(x,y,'-') 
 plt.legend(("a=5", "a=15"))
 plt.show()
