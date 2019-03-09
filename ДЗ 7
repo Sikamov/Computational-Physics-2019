@@ -1,0 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import mlab
+#находим погрешность dF для силы F
+def error(M,dM,m,dm,r,dr):
+    global F,dF
+    F=0
+    dF=0
+    G=6.67384*10**-11
+    F=G*m*M/r/r
+    dF=F*((dM/M)**2+(dm/m)**2+4*(dr/r)**2)**0.5
+    return F,dF
+#метод Монте-Карло
+def gist(M,dM,m,dm,r,dr):
+    global x,F1
+    error(M,dM,m,dm,r,dr)
+    M1=np.random.normal(M,dM,size=n)
+    m1=np.random.normal(m,dm,size=n)
+    r1=np.random.normal(r,dr,size=n)
+    F1=np.zeros(n)
+    F1=G*M1*m1/r1/r1
+    x=np.linspace(F-3*dF,F+3*dF,1000)
+    return x,F1
+#1-ый набор значений
+G=6.67384*10**-11
+M=40*10**4
+dM=0.05*10**4
+m=30*10**4
+dm=0.1*10**4
+r=3.2
+dr=0.01
+n=1000000
+gist(M,dM,m,dm,r,dr)
+print('Первый набор:', 'F=',F, 'dF=',dF)
+plt.figure()
+plt.hist(F1,normed=True,bins=100)
+plt.plot(x,mlab.normpdf(x,F,dF))
+plt.legend(("Монте-Карло 1", "Гаусс 1"))
+plt.show()
+#2-ой набор значений
+G=6.67384*10**-11
+M2=40*10**4
+dM2=2*10**4
+m2=30*10**4
+dm2=10*10**4
+r2=3.2
+dr2=1
+n=1000000
+gist(M2,dM2,m2,dm2,r2,dr2)
+print('Второй набор:', 'F=',F, 'dF=',dF, 'EF~',round(dF/F*100), '%')
+plt.figure()
+plt.hist(F1,normed=True,bins=100)
+plt.legend(("Монте-Карло 2",))
+plt.show()
+plt.plot(x,mlab.normpdf(x,F,dF))
+plt.legend(("Гаусс 2",))
+plt.show()
+#Анализ полученных графиков:
+#1) Для первого набора данных, видно что Гаусс хорошо ложится на полученную гистограмму (ширина Гаусса на глаз совпадает с шириной гистограммы)
+#2) Посмотрим на значение отклонения силы для второго набора, из чего можно сделать вывод, что значение погрености превышает 70%, именно поэтому Гаусс не ложится на гистограмму 
