@@ -1,0 +1,29 @@
+import matplotlib.pyplot as plt
+import numpy as np
+# шаг
+h = 0.01
+tn=5
+n=round(tn/h)
+w=2
+k=4
+# начальные условия
+x=np.zeros(n)
+t=np.arange(0,tn,h)
+v=np.zeros(n)
+# начальные условия
+x[0] = 1
+v[0] = 1
+
+for i in range(n-1):
+    v[i+1]=v[i]+h*(w*x[i]**2+k*x[i]**3)
+    x[i+1]=x[i]+h*v[i]
+ 
+plt.rc('font',**{'family':'verdana'})
+plt.xlabel("t")
+plt.ylabel("x")
+plt.plot(t, x, "b-", label="метод Эйлера")
+#plt.plot(xlist, lst, "g-", label="точное решение")
+plt.legend()
+plt.grid()
+plt.show()
+
