@@ -28,7 +28,7 @@ v1[0]=1
 for i in range(n-1):
     v[i+1]=v[i]+h*(f(t[i],x[i],v[i]))
     x[i+1]=x[i]+h*v[i]
-#Неявный метод Эйлера
+#Усовершенствованный метод Эйлера
 for i in range(n-1):
     x_[i+1]=x1[i]+h*v1[i]
     v_[i+1]=v1[i]+h*(f(t[i],x[i],v[i]))
@@ -47,7 +47,7 @@ plt.legend()
 plt.grid()
 plt.show()
 plt.plot(t, E, "b-", label="явный метод Энергия")
-plt.plot(t, E1, "g-", label="неявный метод Энергия")
+plt.plot(t, E1, "g-", label="усовершенствованный метод Энергия")
 plt.legend()
 plt.grid()
 plt.show()
