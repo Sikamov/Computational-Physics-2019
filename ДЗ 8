@@ -1,3 +1,4 @@
+#Решение диффура: x"+w**2*x+k*x**3=0
 import matplotlib.pyplot as plt
 import numpy as np
 def f(t,x):
@@ -5,7 +6,7 @@ def f(t,x):
     return f
 # шаг
 h = 0.001
-tn=100
+tn=10
 n=round(tn/h)
 w=1
 k=5
